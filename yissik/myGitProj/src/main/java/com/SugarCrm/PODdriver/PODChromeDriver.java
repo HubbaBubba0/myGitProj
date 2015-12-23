@@ -27,33 +27,37 @@ public class PODChromeDriver {
 
         //navigate to leads page
         LeadsPage leadsPage = homePage.navigateToLeadsPage();
-//
-//        //Create Lead
-//        CreateNewLeadPage createNewLeadPage = leadsPage.navigateToCreateNewLeadPage();
-//
-//
-////        //New Lead
-////
-//        //create unique first and last names
-//        int randomizingCounter = 0;
-//        Date date = new Date(System.currentTimeMillis());
-//        String firstName = "" + randomizingCounter++ + date.getTime();
-//        String lastName = "" + randomizingCounter++ + date.getTime();
-//        String salutation = "Prof.";
-//
-//        //fill in form
-//
-//        //first name
-//        createNewLeadPage.enterFirstName(firstName);
-//        createNewLeadPage.enterLastName(lastName);
-//        createNewLeadPage.enterSalutation(salutation);
-//        createNewLeadPage.checkCopyAddressFromLeftCheckbox();
-//        createNewLeadPage.submitNewLead();
-//
-//        //go back to lead search
-//        driver.findElement(By.linkText("Leads")).click();
-//
-//        //search for the created user
+
+        //Create Lead
+        CreateNewLeadPage createNewLeadPage = leadsPage.navigateToCreateNewLeadPage();
+
+
+        //New Lead
+
+        //create unique first and last names
+        int randomizingCounter = 0;
+        Date date = new Date(System.currentTimeMillis());
+        String firstName = "" + randomizingCounter++ + date.getTime();
+        String lastName = "" + randomizingCounter++ + date.getTime();
+        String salutation = "Prof.";
+
+        //fill in form
+
+        //first name
+        createNewLeadPage.enterFirstName(firstName);
+        createNewLeadPage.enterLastName(lastName);
+        createNewLeadPage.enterSalutation(salutation);
+        createNewLeadPage.checkCopyAddressFromLeftCheckbox();
+        createNewLeadPage.submitNewLead();
+
+        //navigate to leads page
+        leadsPage = leadsPage.navigateToLeadsPage();
+
+        //search for the created user
+        leadsPage.searchUser(lastName);
+        leadsPage.isSearchUserFound(lastName);
+
+
 //        wdWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("search_name_basic")));
 //        WebElement search_name_basic = driver.findElement(By.id("search_name_basic"));
 //        search_name_basic.clear();
