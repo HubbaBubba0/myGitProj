@@ -8,15 +8,15 @@ package com.SugarCrm.PODdriver;
 /**
  * Created by ninja on 22/12/15.
  */
-public class LoginPage {
+public class LoginPage extends BasePage {
     @FindBy(name = "user_name")
     private WebElement userNameBox;
     @FindBy(name = "user_password")
     private WebElement passwordBox;
-    private WebDriver driver;
+
 
     LoginPage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
         PageFactory.initElements(driver, this);
     }
 

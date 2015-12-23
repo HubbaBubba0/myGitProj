@@ -2,7 +2,6 @@ package com.SugarCrm.PODdriver;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.PageFactory;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -26,7 +25,7 @@ public class PODChromeDriver {
         HomePage homePage = loginPage.fillinAndSubmit(userName, userPassword);
 
         //navigate to leads page
-        LeadsPage leadsPage = homePage.navigateToLeadsPage();
+        LeadsPage leadsPage = homePage.navigateToSalesLeadsPage();
 
         //Create Lead
         CreateNewLeadPage createNewLeadPage = leadsPage.navigateToCreateNewLeadPage();
@@ -51,7 +50,7 @@ public class PODChromeDriver {
         createNewLeadPage.submitNewLead();
 
         //navigate to leads page
-        leadsPage = leadsPage.navigateToLeadsPage();
+        leadsPage = leadsPage.navigateToSalesLeadsPage();
 
         //search for the created user
         leadsPage.searchUser(lastName);

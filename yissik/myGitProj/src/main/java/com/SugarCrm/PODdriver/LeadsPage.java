@@ -1,17 +1,15 @@
 package com.SugarCrm.PODdriver;
 
-        import org.openqa.selenium.By;
-        import org.openqa.selenium.WebDriver;
-        import org.openqa.selenium.WebElement;
-        import org.openqa.selenium.support.FindBy;
-        import org.openqa.selenium.support.How;
-        import org.openqa.selenium.support.PageFactory;
-        import org.testng.Assert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
+import java.util.LinkedList;
+import java.util.List;
 
-        import java.util.LinkedList;
-        import java.util.List;
-
-public class LeadsPage  {
+public class LeadsPage extends BasePage {
 
     @FindBy(xpath = "//a/span[text()='Create Lead']")
     private WebElement createLeadLink;
@@ -23,25 +21,34 @@ public class LeadsPage  {
     private WebElement searchNameBox;
 
     private List<WebElement> searchLastNameText = new LinkedList();
-    private WebDriver driver;
+
+    MenuBar menuBar;
+
 
     LeadsPage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
+        menuBar = new MenuBar(driver);
         PageFactory.initElements(driver, this);
     }
 
     public CreateNewLeadPage navigateToCreateNewLeadPage() {
         createLeadLink.click();
-
         return new CreateNewLeadPage(driver);
     }
 
-    public LeadsPage navigateToLeadsPage() {
+    public EditLeadPage navigateToEditLeadPage(String lastName) {
+        getUserByLastName(lastName).get(0).click();
+        return new EditLeadPage(driver);
+    }
 
-        salesLink.click();
-        leadsLink.click();
+    public LeadsPage navigateToSalesLeadsPage() {
 
-        return new LeadsPage(driver);
+//        SubMenu sb = menuBar.clickSales();
+//        sb.clickSubMenuLeads();
+//
+//        return new LeadsPage(driver);
+
+        return menuBar.navigateToSalesLeadsPage();
     }
 
     public void searchUser(String lastName) {
@@ -50,10 +57,21 @@ public class LeadsPage  {
         searchNameBox.submit();
     }
 
-    public void isSearchUserFound(String lastName) {
-//        boolean isFound = searchLastNameText.size() > 0;
-        searchLastNameText = driver.findElements(By.xpath("//*[contains(text(),'" + lastName + "')]"));
-        Assert.assertFalse(searchLastNameText.isEmpty());
+    public List<WebElement> getUserByLastName(String lastName) {
+        return driver.findElements(By.xpath("//*[contains(text(),'" + lastName + "')]"));
 
     }
+
+    public boolean isSearchUserFound(String lastName) {
+        searchLastNameText = getUserByLastName(lastName);
+        boolean isFound = !searchLastNameText.isEmpty();
+        Assert.assertTrue(isFound);
+
+        return isFound;
+    }
+//
+//    public EditLeadPage navigateToEditLeadPage() {
+//        menuBar.navigateToSalesLeadsPage();
+//        return null;
+//    }
 }
