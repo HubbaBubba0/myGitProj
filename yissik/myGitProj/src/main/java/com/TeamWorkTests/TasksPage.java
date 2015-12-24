@@ -37,14 +37,14 @@ public class TasksPage extends DashBoardPage {
 //        tasksListPage = new TasksListPage(listName, driver);
 //    }
 
-    public AddNewTaskToListPage clickAddNewTaskBtn(String uniqueListName) {
-//        setCurrentListPage(uniqueListName);
-//        WebElement newListElement = ;
-        TasksListElement = driver.findElement(By.xpath("//a[contains(text(), '" + uniqueListName + "')]/../.."));
-        addNewTaskBtn = TasksListElement.findElement(By.xpath("*//button"));
-        addNewTaskBtn.click();
-        return new AddNewTaskToListPage(driver);
-    }
+//    public AddNewTaskToListPage clickAddNewTaskBtn(String uniqueListName) {
+////        setCurrentListPage(uniqueListName);
+////        WebElement newListElement = ;
+//        TasksListElement = driver.findElement(By.xpath("//a[contains(text(), '" + uniqueListName + "')]/../.."));
+//        addNewTaskBtn = TasksListElement.findElement(By.xpath("*//button"));
+//        addNewTaskBtn.click();
+//        return new AddNewTaskToListPage(driver);
+//    }
 
 //    public void setCurrentListPage(String uniqueListName) {
 //        tasksListPage = new AddNewTaskToListPage(driver);

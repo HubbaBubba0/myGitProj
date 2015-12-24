@@ -62,12 +62,27 @@ public class TeamWorkTests {
 
         //find newly created list
 //        WebElement newListElement = tasksPage.findListByName(uniqueListName);
-//        TasksListPage listPage = new TasksListPage(newListElement, driver);
+        TasksListPage listPage = new TasksListPage(uniqueListName, driver);
 //        TasksListPage listPage = tasksPage.findListByName(uniqueListName);
-//        listPage.clickAddNewTaskBtn();
+        listPage.clickAddNewTaskBtn();
 
-        AddNewTaskToListPage addNewTaskToListPage = tasksPage.clickAddNewTaskBtn(uniqueListName);
-//        addNewTaskToListPage.enterTaskName
+//        AddNewTaskToListPage addNewTaskToListPage = listPage.clickAddNewTaskBtn();
+        //add new task
+        String taskName = "taskush";
+        listPage.enterTaskName(taskName);
+        //assign to
+        listPage.selectAssignTo("fake01");
+        //submit task
+        listPage.clickSaveChangesToTaskBtn();
+
+        //add another task
+        listPage = new TasksListPage(uniqueListName, driver);
+        taskName = "askush2";
+        listPage.enterTaskName(taskName);
+        //assign to
+        listPage.selectAssignTo("fake02");
+        //submit task
+        listPage.clickSaveChangesToTaskBtn();
     }
 
 }

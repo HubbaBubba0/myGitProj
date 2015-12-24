@@ -11,4 +11,7 @@ public class AddNewTaskToListPage extends BasePage {
     }
 
 
+    public void enterTaskName(String taskName) {
+
+    }
 }
