@@ -10,8 +10,8 @@ public class TasksPage extends DashBoardPage {
 
     @FindBy(id = "liBFOATL")
     private WebElement addNewTaskBtn;
+
     private WebElement TasksListElement;
-    private TasksListPage tasksListPage;
 
     TasksPage(WebDriver driver) {
         super(driver);
@@ -31,13 +31,24 @@ public class TasksPage extends DashBoardPage {
         return new NewTaskListPage(driver);
     }
 
+    public TasksListPage createNewTaskList(String uniqueListName) {
+        return new TasksListPage(uniqueListName, driver);
+    }
+
+    public boolean isListFound(String uniqueListName) {
+        if (isElementFound(By.xpath("//*[@id='pageTitle' and text()='Tasks']"))) {
+            return true;
+        }
+        return false;
+    }
+
 //    private void findListByName(String listName) {
 //        WebElement newListElement = driver.findElement(By.xpath("//*[contains(text(), '" + listName + "')]/.."));
 ////        return textElement.findElement(By.xpath("//.."));
 //        tasksListPage = new TasksListPage(listName, driver);
 //    }
 
-//    public AddNewTaskToListPage clickAddNewTaskBtn(String uniqueListName) {
+//    public AddNewTaskToListPage findListByNameAndClickAddNewTaskButton(String uniqueListName) {
 ////        setCurrentListPage(uniqueListName);
 ////        WebElement newListElement = ;
 //        TasksListElement = driver.findElement(By.xpath("//a[contains(text(), '" + uniqueListName + "')]/../.."));

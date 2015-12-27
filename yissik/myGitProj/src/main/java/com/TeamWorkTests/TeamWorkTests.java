@@ -1,7 +1,6 @@
 package com.TeamWorkTests;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -42,11 +41,12 @@ public class TeamWorkTests {
     }
 
     @Test
-    public void loginTest() throws InterruptedException {
+    public void loginAndTasksTest() throws InterruptedException {
         //login
         HomePage homePage = login();
         //go to dashboard tab
         DashBoardPage dashBoardPage = homePage.navigateToDashboard();
+//        OverviewPage overviewPage = dashBoardPage.navigateToOverviewTab();
         //go to tasks tab
         Thread.sleep(3000); //webpage bug??
         TasksPage tasksPage = dashBoardPage.navigateToTasksPage();
@@ -62,12 +62,14 @@ public class TeamWorkTests {
 
         //find newly created list
 //        WebElement newListElement = tasksPage.findListByName(uniqueListName);
-        TasksListPage listPage = new TasksListPage(uniqueListName, driver);
 //        TasksListPage listPage = tasksPage.findListByName(uniqueListName);
-        listPage.clickAddNewTaskBtn();
 
-//        AddNewTaskToListPage addNewTaskToListPage = listPage.clickAddNewTaskBtn();
-        //add new task
+//        AddNewTaskToListPage addNewTaskToListPage = listPage.findListByNameAndClickAddNewTaskButton();
+
+        //add new task to existing task list
+        TasksListPage listPage = tasksPage.createNewTaskList(uniqueListName);
+        listPage.findListByNameAndClickAddNewTaskButton();
+
         String taskName = "taskush";
         listPage.enterTaskName(taskName);
         //assign to
@@ -75,14 +77,87 @@ public class TeamWorkTests {
         //submit task
         listPage.clickSaveChangesToTaskBtn();
 
-        //add another task
-        listPage = new TasksListPage(uniqueListName, driver);
-        taskName = "askush2";
+        Thread.sleep(1000); //sleep for changes to take affect
+
+        //add another task to existing task list
+        //no need to find the task list to add to because it's the same list
+//        listPage = tasksPage.createNewTaskList(uniqueListName);
+//        listPage.findListByNameAndClickAddNewTaskButton();
+
+        taskName = "taskush2";
         listPage.enterTaskName(taskName);
         //assign to
         listPage.selectAssignTo("fake02");
         //submit task
         listPage.clickSaveChangesToTaskBtn();
+
+        //navigate to milestone page tab
+        MilestonePage milestonePage = dashBoardPage.navigateToMilestoneTab();
+        Thread.sleep(1000); //sleep for changes to take affect
+        tasksPage = dashBoardPage.navigateToTasksPage();
+
+        //make sure task list and its tasks still exist
+        boolean listFound = tasksPage.isListFound(uniqueListName);
+        if(listFound) {
+            System.out.println("Task list " + uniqueListName + " found, with " + listPage.numOfTasks() + " tasks in the list");
+
+        } else {
+            System.out.println("Task list " + uniqueListName + " NOT found");
+        }
+
+        listPage.deleteList();
     }
+
+    @Test
+    public void addMilestoneTest() throws InterruptedException {
+
+        //login
+        HomePage homePage = login();
+        //go to dashboard tab
+        DashBoardPage dashBoardPage = homePage.navigateToDashboard();
+        //go to tasks tab
+        Thread.sleep(3000); //webpage bug??
+        TasksPage tasksPage = dashBoardPage.navigateToTasksPage();
+
+        //add new list tasks
+        NewTaskListPage newTaskListPage = tasksPage.clickAddTaskBtn();
+        //create unique list name
+        String uniqueListName = createUniqueListName("r2d23poob1");
+        //type the unique name to text box
+        newTaskListPage.enterListName(uniqueListName);
+        //submit
+        tasksPage = newTaskListPage.clickAddTaskList();
+
+        MilestonePage milestonePage = dashBoardPage.navigateToMilestoneTab();
+        AddNewMilestonePage addNewMilestonePage = milestonePage.clickAddNewMileStoneBtn();
+        String uniquemilestoneName = createUniqueListName("significantMilestone");
+        milestonePage = addNewMilestonePage.enterMilestoneNameAndSubmit(uniquemilestoneName);
+        milestonePage.hoverOverMilestone(uniquemilestoneName);
+        milestonePage.attachMilestoneToTask(uniquemilestoneName);
+
+    }
+
+//
+//    @Test
+//    public void deleteAllLists() throws InterruptedException {
+//        //login
+//        HomePage homePage = login();
+//        //go to dashboard tab
+//        DashBoardPage dashBoardPage = homePage.navigateToDashboard();
+////        OverviewPage overviewPage = dashBoardPage.navigateToOverviewTab();
+//        //go to tasks tab
+//        Thread.sleep(3000); //webpage bug??
+//        TasksPage tasksPage = dashBoardPage.navigateToTasksPage();
+//
+//        List<WebElement> allTasks = driver.findElements(By.xpath("//li[@class='currentTaskListsItem']"));
+//
+//        for (int i=0; i<10; i++) {
+//            allTasks.get(i).click();
+//            String currentUrl = driver.getCurrentUrl();
+//            String[] splitCurrentUrl = currentUrl.split("\\/");
+//            currentUrl = splitCurrentUrl[splitCurrentUrl.length - 1];
+//
+//        }
+//    }
 
 }

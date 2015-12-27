@@ -15,10 +15,16 @@ public class DashBoardPage extends HomePage {
     }
 
     public TasksPage navigateToTasksPage() {
-        //click the Tasks tab
-        dashBoardMenu.navigateToTasksPage();
-
-        //return new tasks page
-        return new TasksPage(driver);
+        //click the Tasks tab and return the newly tasks page
+        return dashBoardMenu.navigateToTasksPage();
     }
+
+    public MilestonePage navigateToMilestoneTab() throws InterruptedException {
+
+        return dashBoardMenu.navigateToMilestonePage();
+    }
+
+//    public OverviewPage navigateToOverviewTab() {
+//        return new OverviewPage(driver);
+//    }
 }
