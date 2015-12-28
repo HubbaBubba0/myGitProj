@@ -77,9 +77,9 @@ public class TasksListPage extends BasePage {
     public void deleteList() throws InterruptedException {
         if(findListByName()) {
             Thread.sleep(1000);
-//            JavascriptExecutor jse = (JavascriptExecutor)driver;
-//            jse.executeScript("arguments[0].scrollIntoView()", listWebElements.get(0));
-//            Thread.sleep(3000);
+            JavascriptExecutor jse = (JavascriptExecutor)driver;
+            jse.executeScript("arguments[0].scrollIntoView()", listWebElements.get(0));
+            Thread.sleep(3000);
             WebElement parentElement = listWebElements.get(0);
             parentElement.findElement(By.xpath("*//a[contains(text(), '" + listName  + "')]")).click();
 

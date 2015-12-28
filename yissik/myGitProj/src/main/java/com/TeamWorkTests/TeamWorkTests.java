@@ -2,22 +2,39 @@ package com.TeamWorkTests;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-public class TeamWorkTests {
-    private WebDriver driver;
-    private String userName = "fake00@fake.com";
-    private String userPassword = "fake";
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+@ContextConfiguration(locations = { "classpath:bean.xml" })
+public class TeamWorkTests extends AbstractTestNGSpringContextTests {
+
+    //instanciate with bean
+//        ApplicationContext context = new ClassPathXmlApplicationContext("bean.xml");
+
+//        Setup setup = (Setup) context.getBean("Setup");
+//        WebDriverFactory webDriverFactory = (WebDriverFactory) context.getBean("WebDriverFactory");
+
+    WebDriver driver;
+
+    @Autowired
+    Setup setup;
+    @Autowired
+    WebDriverFactory webDriverFactory;
 
     public HomePage login() {
 
         LoginPage loginPage = new LoginPage(driver);
-        return loginPage.fillinAndSubmit(userName, userPassword);
+        return loginPage.fillinAndSubmit(setup.getDefaultUser(), setup.getDefaultPassword());
     }
 
     private String createUniqueListName(String prefix) {
@@ -28,16 +45,32 @@ public class TeamWorkTests {
         return listName;
     }
 
+//    @BeforeMethod
+//    public void startUp() {
+//        // Create a new instance of the Chrome driver and a webDriverWait
+//        System.setProperty("webdriver.chrome.driver", "/home/ninja/Downloads/chromedriver");
+//        driver = new ChromeDriver();
+//        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+//
+//        // Go to sugar crm
+//        driver.get("https://topq.teamwork.com");
+//
+//    }
+
     @BeforeMethod
-    public void startUp() {
+    public void startUpWithBean() {
+
+        System.out.println(webDriverFactory.getDriverLocation() + "\n" + webDriverFactory.getDriverType());
+
         // Create a new instance of the Chrome driver and a webDriverWait
-        System.setProperty("webdriver.chrome.driver", "/home/ninja/Downloads/chromedriver");
-        driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        if(webDriverFactory.getDriverType().equals("chrome")) {
+            System.setProperty("webdriver.chrome.driver", webDriverFactory.getDriverLocation());
+            driver = new ChromeDriver();
+        }
+        driver.manage().timeouts().implicitlyWait(Integer.parseInt(webDriverFactory.getImplicitWait()), TimeUnit.SECONDS);
 
         // Go to sugar crm
-        driver.get("https://topq.teamwork.com");
-
+        driver.get(setup.getUrl());
     }
 
     @Test
@@ -106,7 +139,23 @@ public class TeamWorkTests {
         }
 
         listPage.deleteList();
+
+        driver.quit();
     }
+
+    @Test
+    public void HelloWorldBeanTest() {
+
+        ApplicationContext context =
+                new ClassPathXmlApplicationContext("bean.xml");
+
+        HelloWorld obj = (HelloWorld) context.getBean("helloWorld");
+
+        obj.getMessage();
+
+
+    }
+
 
     @Test
     public void addMilestoneTest() throws InterruptedException {
@@ -133,7 +182,7 @@ public class TeamWorkTests {
         String uniquemilestoneName = createUniqueListName("significantMilestone");
         milestonePage = addNewMilestonePage.enterMilestoneNameAndSubmit(uniquemilestoneName);
         milestonePage.hoverOverMilestone(uniquemilestoneName);
-        milestonePage.attachMilestoneToTask(uniquemilestoneName);
+//        milestonePage.attachMilestoneToTask(uniquemilestoneName);
 
     }
 

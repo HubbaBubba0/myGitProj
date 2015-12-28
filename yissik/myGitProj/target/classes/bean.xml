@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+    <context:property-placeholder location="classpath:bean.properties"/>
+
+    <bean id="helloWorld" class="com.TeamWorkTests.HelloWorld">
+        <property name="message" value="Hello World!"/>
+    </bean>
+
+    <bean id="Setup" class="com.TeamWorkTests.Setup">
+        <property name="url" value="${url}"/>
+        <property name="defaultUser" value="${defaultUser}"/>
+        <property name="defaultPassword" value="${defaultPassword}"/>
+    </bean>
+
+    <bean id="WebDriverFactory" class="com.TeamWorkTests.WebDriverFactory">
+        <property name="driverType" value="${driverType}"/>
+        <property name="driverLocation" value="${driverLocation}"/>
+        <property name="implicitWait" value="${implicitWait}"/>
+    </bean>
+
+</beans>
