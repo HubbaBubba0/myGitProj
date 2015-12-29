@@ -22,7 +22,7 @@ public class TeamWorkTest extends AbstractTestNGSpringContextTests {
 //        ApplicationContext context = new ClassPathXmlApplicationContext("bean.xml");
 
 //        Setup setup = (Setup) context.getBean("Setup");
-//        WebDriverFactory webDriverFactory = (WebDriverFactory) context.getBean("WebDriverFactory");
+///        WebDriverFactory webDriverFactory = (WebDriverFactory) context.getBean("WebDriverFactory");
 
     WebDriver driver;
 
