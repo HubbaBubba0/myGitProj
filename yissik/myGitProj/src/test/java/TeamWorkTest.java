@@ -1,5 +1,4 @@
-package com.TeamWorkTests;
-
+import com.TeamWorkTests.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +14,9 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+@Test
 @ContextConfiguration(locations = { "classpath:bean.xml" })
-public class TeamWorkTests extends AbstractTestNGSpringContextTests {
+public class TeamWorkTest extends AbstractTestNGSpringContextTests {
 
     //instanciate with bean
 //        ApplicationContext context = new ClassPathXmlApplicationContext("bean.xml");
@@ -143,18 +143,18 @@ public class TeamWorkTests extends AbstractTestNGSpringContextTests {
         driver.quit();
     }
 
-    @Test
-    public void HelloWorldBeanTest() {
-
-        ApplicationContext context =
-                new ClassPathXmlApplicationContext("bean.xml");
-
-        HelloWorld obj = (HelloWorld) context.getBean("helloWorld");
-
-        obj.getMessage();
-
-
-    }
+//    @Test
+//    public void HelloWorldBeanTest() {
+//
+//        ApplicationContext context =
+//                new ClassPathXmlApplicationContext("bean.xml");
+//
+//        HelloWorld obj = (HelloWorld) context.getBean("helloWorld");
+//
+//        obj.getMessage();
+//
+//
+//    }
 
 
     @Test

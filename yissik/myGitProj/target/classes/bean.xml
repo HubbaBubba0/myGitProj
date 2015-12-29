@@ -10,9 +10,9 @@
 
     <context:property-placeholder location="classpath:bean.properties"/>
 
-    <bean id="helloWorld" class="com.TeamWorkTests.HelloWorld">
-        <property name="message" value="Hello World!"/>
-    </bean>
+    <!--<bean id="helloWorld" class="com.TeamWorkTest.HelloWorld">-->
+        <!--<property name="message" value="Hello World!"/>-->
+    <!--</bean>-->
 
     <bean id="Setup" class="com.TeamWorkTests.Setup">
         <property name="url" value="${url}"/>

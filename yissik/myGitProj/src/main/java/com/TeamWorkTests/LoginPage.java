@@ -13,7 +13,7 @@ public class LoginPage extends BasePage {
     private WebElement passwordBox;
 
 
-    LoginPage(WebDriver driver) {
+    public LoginPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
 
